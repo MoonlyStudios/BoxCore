@@ -1,0 +1,43 @@
+settings:
+  teleport-cooldown-seconds: 3
+
+  teleport-cross-world: true
+
+spawn-location:
+  world: world
+  x: 0.0
+  y: 64.0
+  z: 0.0
+  yaw: 0.0
+  pitch: 0.0
+
+messages:
+  enable-chat-messages: true
+  enable-title: true
+  enable-subtitle: true
+  enable-actionbar: true
+
+  enable-title-countdown: false
+  enable-subtitle-countdown: false
+
+  setspawn-success: "&aSpawn location set successfully!"
+  setspawn-title: "&aSpawn Set!"
+  setspawn-subtitle: "&fYour new spawn point."
+
+  spawn-not-set: "&cThe spawn location has not been set yet."
+  teleport-countdown-start: "&aTeleporting to spawn in &e{time} &aseconds. Do not move!"
+  teleport-already-in-progress: "&cYou already have a teleportation in progress."
+  teleport-cancelled-moved: "&cTeleportation cancelled! You moved."
+  teleport-success: "&aYou have been teleported to spawn!"
+
+  teleport-title: "&aWelcome to Spawn!"
+  teleport-subtitle: "&fEnjoy your stay."
+
+  title-teleporting: "&bTeleporting..."
+  subtitle-teleporting: "&f{time}"
+
+  teleport-cross-world-disabled: "&cYou cannot teleport to spawn from another world."
+
+  actionbar-teleporting: "&bTeleporting in: &f{time}..."
+  actionbar-teleport-success: "&aYou arrived!"
+  actionbar-teleport-cancelled: "&cTeleportation cancelled."

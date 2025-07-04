@@ -1,0 +1,56 @@
+settings:
+  show_on_scoreboard: true
+
+messages:
+  enabled: true
+  start: "&cThe server will reboot in %time%!"
+  halfway: "&eHalf the time remaining until reboot: %time%!"
+  end: "&4The server is rebooting NOW!"
+  thresholds:
+    3m: "&aThe server will reboot in &63 minutes&a!"
+    1m: "&caThe server will reboot in &61 minute&a!"
+    10s: "&cThe server will reboot in &610 seconds&c!"
+    5s: "&cThe server will reboot in &65 seconds&c!"
+    3s: "&cThe server will reboot in &63 seconds&4!"
+    2s: "&cThe server will reboot in &62 seconds&4!"
+    1s: "&cThe server will reboot in &61 second&4!"
+
+title:
+  enabled: true
+  fade_in: 10 #(20 ticks = 1 second)
+  stay: 70
+  fade_out: 20
+
+  start:
+    title: "&c&lREBOOT"
+    subtitle: "&fIn %time%"
+  halfway:
+    title: "&e&lHALF TIME"
+    subtitle: "&f%time% remaining"
+  end:
+    title: "&4&lREBOOTING"
+    subtitle: "&fGoodbye!"
+  thresholds:
+    3s:
+      title: "&c&l3"
+      subtitle: "&fseconds"
+    2s:
+      title: "&c&l2"
+      subtitle: "&fseconds"
+    1s:
+      title: "&c&l1"
+      subtitle: "&fsecond"
+
+actionbar:
+  enabled: true
+  format: "&6Reboot: &f%time%"
+  halfway: "&eHalf the time remaining until reboot: %time%!"
+  end: "&4The server is rebooting NOW!"
+  thresholds:
+    3m: "&aREBOOT IN 3 MINUTES!"
+    1m: "&aREBOOT IN 1 MINUTE!"
+    10s: "&cREBOOT IN 10s!"
+    5s: "&cREBOOT IN 5s!"
+    3s: "&4REBOOT IN 3s!"
+    2s: "&4REBOOT IN 2s!"
+    1s: "&4REBOOT IN 1s!"

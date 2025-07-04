@@ -1,0 +1,12 @@
+settings:
+  enabled: true
+
+  disappearance-delay-seconds: 5
+
+  apply-to-all-blocks: false
+
+  specific-blocks:
+    - COBWEB
+    - WHITE_WOOL
+
+  log-removals: true

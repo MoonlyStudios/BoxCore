@@ -1,0 +1,47 @@
+settings:
+  enabled: true
+  selection-tool: "GOLDEN_HOE"
+
+messages:
+  no-permission-command: "&cYou do not have permission to use this command."
+
+  worldguard-not-found: "&cWorldGuard is not found or not enabled. Claims module cannot function."
+  region-manager-error: "&cAn internal error occurred with the region manager. Please contact staff."
+
+  selection-tool-given: "&aYou have received the Claim Selection Tool (&e{tool}&a)."
+  selection-point-set: "{point} set at &e{location}&a."
+  selection-cleared: "&aYour claim selection has been cleared."
+  selection-incomplete: "&cYour claim selection is incomplete. Please select two points with the tool."
+  selection-different-worlds: "&cYour selection points must be in the same world!"
+
+  claim-name-exists: "&cA claim with the name '&e{name}&c' already exists."
+  claim-name-invalid: "&cClaim name can only contain letters, numbers, and underscores, and be 3-32 characters long."
+  claim-created-success: "&aClaim '&e{name}&a' created successfully!"
+  claim-created-error: "&cFailed to create claim '&e{name}&c'. An internal error occurred."
+  claim-created-title: "&aClaim Created!"
+  claim-created-subtitle: "&f'{name}' has been secured."
+
+  mine-region-activated: "&aRegion '&e{name}&a' has been set as a mine region (Block Break: ALLOW)."
+  mine-region-deactivated: "&aRegion '&e{name}&a' is no longer a mine region (Block Break: DENY)."
+
+  flag-type-invalid: "&cInvalid flag type. Available: mine"
+  flag-set-success: "&aFlag '{flag_type}' for region '&e{name}&a' set to {state}."
+  flag-set-error: "&cFailed to set flag '{flag_type}' for region '&e{name}&c'."
+  flag-set-title: "&aFlag Updated!"
+  flag-set-subtitle: "&f'{flag_type}' for '{name}' is now {state}."
+
+  claim-deleted-success: "&aClaim '&e{name}&a' deleted successfully."
+  claim-deleted-error: "&cFailed to delete claim '&e{name}&c'. An internal error occurred."
+  no-permission-delete-others: "&cYou do not have permission to delete other players' regions."
+  claim-deleted-title: "&cClaim Deleted!"
+  claim-deleted-subtitle: "&f'{name}' has been removed."
+
+  no-regions-found: "&7No regions found in this world."
+  region-not-found: "&cRegion '&e{name}&c' not found."
+
+  selection-point-1-title: "&aPoint 1 Set!"
+  selection-point-1-subtitle: "&fFirst corner selected."
+  selection-point-2-title: "&aPoint 2 Set!"
+  selection-point-2-subtitle: "&fSecond corner selected."
+  selection-cleared-title: "&eSelection Cleared!"
+  selection-cleared-subtitle: "&fYour selection has been reset."

@@ -1,0 +1,16 @@
+gui-settings:
+  main-gui-title: "&8Available Kits"
+  main-gui-rows: 3
+
+messages:
+  kit-claimed: "&aYou have successfully claimed the &e{kit_name} &akit."
+  kit-received: "&aYou have received the &e{kit_name} &akit."
+  kit-on-cooldown: "&cYou cannot claim this kit yet. Time remaining: &e{time}"
+  kit-does-not-exist: "&cThe kit '&e{kit_name}&c' does not exist."
+  no-permission-kit: "&cYou do not have permission to claim this kit."
+  no-permission-command: "&cYou do not have permission to use this command."
+  player-not-found: "&cPlayer '&e{player_name}&c' not found."
+  kit-given: "&aYou have given the &e{kit_name} &akit to &b{player_name}&a."
+  kit-deleted: "&aKit '&e{kit_name}&a' has been successfully deleted."
+  kit-saved: "&aKit '&e{kit_name}&a' has been saved."
+  inventory-full: "&cYour inventory is full. Please make space before claiming a kit."

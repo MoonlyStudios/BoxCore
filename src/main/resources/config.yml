@@ -1,0 +1,13 @@
+  modules:
+    kits:
+      enabled: true
+    temporaryblocks:
+      enabled: true
+    spawn:
+      enabled: true
+    claims:
+      enabled: true
+    scoreboard:
+      enabled: true
+    reboot:
+      enabled: true

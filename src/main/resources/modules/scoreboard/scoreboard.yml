@@ -1,0 +1,45 @@
+settings:
+  enabled: true
+
+########################
+#  SCOREBOARD DEFAULT  #
+########################
+
+default-scoreboard:
+  title:
+    frames:
+      - '&cMoonly Studios'
+    ticks: 0
+  custom-footer-frames:
+    - '&7moonlystudios.es'
+  custom-footer-ticks: 0
+  scoreboard:
+    - '    <gray>⌚ %localtime_timezone_,MMM d, Y%'
+    - ' '
+    - '&9Testing'
+    - '&dTesting'
+    - ' '
+    - '%footer%'
+
+#################
+#  CUSTOMTIMER  #
+#################
+
+custom-timer-scoreboard: # Tu sección para cuando el timer está activo
+  title:
+    frames:
+      - '&cMoonly Studios'
+    ticks: 0
+  custom-footer-frames:
+    - '&7moonlystudios.es'
+  custom-footer-ticks: 0
+  scoreboard:
+    - '    <gray>⌚ %localtime_timezone_,MMM d, Y%'
+    - ' '
+    - '&9Testing'
+    - '&dTesting'
+    - ''
+    - '%customtimer_list%'
+    - ' '
+    - '%footer%' 
+

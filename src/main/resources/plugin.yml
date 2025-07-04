@@ -1,0 +1,67 @@
+name: BoxCore
+main: net.moonly.Box
+version: 1.0
+api-version: 1.20.6
+depend: [PlaceholderAPI, WorldGuard]
+
+commands:
+  kit:
+    aliases: [kits, gkit, gkits]
+    permission: boxcore.kit
+    permission-message: No permissions.
+  setspawn:
+    permission: boxcore.spawn.setspawn
+    permission-message: No Permissions.
+  spawn:
+    permission: boxcore.spawn.use
+    permission-message: No Permissions.
+  claim:
+    permission: boxcore.claim.use
+    permission-message: No Permissions.
+  customtimer:
+    permission: boxcore.customtimer
+    permission-message: No Permissions.
+  reboot:
+    permission: boxcore.reboot
+    permission-message: No Permissions.
+  boxcore:
+    permission: boxcore.reboot
+    permission-message: No Permissions.
+  deathmessage:
+    permission: sakuracore.deathmessage.use
+    permission-message: You do not have permission to use this command.
+permissions:
+  boxcore.kit:
+    default: true
+  boxcore.kit.admin:
+    default: op
+    children:
+      boxcore.kit.editor: true
+      boxcore.kit.create: true
+      boxcore.kit.delete: true
+      boxcore.kit.give: true
+      boxcore.kit.edit: true
+      boxcore.kit.reset: true
+      boxcore.kit.list: true
+  boxcore.temporaryblocks.bypass:
+    default: op
+  boxcore.spawn.setspawn:
+    default: op
+  boxcore.spawn.use:
+    default: true
+  boxcore.spawn.bypass_cooldown:
+    default: op
+  boxcore.claim.use:
+    default: true
+  boxcore.claim.create:
+    default: op
+  boxcore.customtimer:
+    default: op
+  boxcore.reboot:
+    default: op
+  boxcore:
+    permission: boxcore.reload
+    permission-message: No Permissions.
+  boxcore.deathmessages:
+    permission: sakuracore.deathmessage.use
+    default: op

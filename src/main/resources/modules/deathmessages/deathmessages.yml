@@ -1,0 +1,21 @@
+# modules/deathmessages/deathmessages.yml
+
+settings:
+  enable-custom-death-messages: true
+  # Mensaje predeterminado si el jugador no tiene uno personalizado.
+  # Puedes usar %player%, %killer%, %cause%, %original_death_message%
+  default-death-message: "&c%player% fue asesinado por &c%killer%&7."
+  max-message-length: 64
+
+predefined-messages:
+  - "&c%player% fue brutalmente aniquilado por &c%killer%&c"
+  - "&c%player% fue violado por &c%killer%&c"
+  - "&c%player% fue golpeado bien fuerte &c%killer%&c"
+  - "&c%player% fue apañalado por &c%killer%&c"
+
+permissions:
+  set-custom-message: "sakuracore.deathmessage.set"
+  use-default-message: "sakuracore.deathmessage.use"
+  clear-custom-message: "sakuracore.deathmessage.clear"
+  open-gui: "sakuracore.deathmessage.gui"
+  write-in-gui: "sakuracore.deathmessage.write"
