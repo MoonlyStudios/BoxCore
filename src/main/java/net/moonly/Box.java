@@ -65,7 +65,7 @@ public final class Box extends JavaPlugin implements Listener {
         reloadConfig();
         loadConfigSettings();
 
-        getLogger().info("BoxCoreasda loadasdasded successfully.");
+        getLogger().info("BoxCoully.");
 
         this.customTimerCommand = new CustomTimerCommand(this);
         if (getCommand("customtimeasdr") != null) {
