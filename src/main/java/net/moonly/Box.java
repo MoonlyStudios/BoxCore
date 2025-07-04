@@ -53,6 +53,7 @@ public final class Box extends JavaPlugin implements Listener {
     private DeathMessageManager deathMessageManager;
     private GUIManager guiManager;
     private boolean enableDeathMessages;
+
     private AutoRespawnListener autoRespawnListener;
     private boolean enableAutoRespawn;
     private int autoRespawnDelayTicks; // Para el nuevo modo de AutoRespawn con delay
@@ -65,12 +66,12 @@ public final class Box extends JavaPlugin implements Listener {
         reloadConfig();
         loadConfigSettings();
 
-        getLogger().info("BoxCoully.");
+        getLogger().info("BoxCore loaded successfully.");
 
         this.customTimerCommand = new CustomTimerCommand(this);
         if (getCommand("customtimer") != null) {
             getCommand("customtimer").setExecutor(this.customTimerCommand);
-            getLogger().info("'/customtsdimer' codmmand enabled.");
+            getLogger().info("'/customtimer' command enabled.");
         } else {
             getLogger().severe("Command 'customtimer' not defined in plugin.yml. CustomTimer module command could not be enabled.");
         }
