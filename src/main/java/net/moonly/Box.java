@@ -61,6 +61,10 @@ public final class Box extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
 
+        getLogger().info("spawn.");
+        getLogger().info("kit.");
+
+
         saveDefaultConfig();
         reloadConfig();
         loadConfigSettings();
