@@ -59,14 +59,14 @@ public final class Box extends JavaPlugin implements Listener {
     private int autoRespawnDelayTicks; // Para el nuevo modo de AutoRespawn con delay
 
     @Override
-    public void onEnabletesting() {
+    public void onEnable() {
         instance = this;
 
         saveDefaultConfig();
         reloadConfig();
         loadConfigSettings();
 
-        getLogger().info("BoxCore loaded successfully.");
+        getLogger().info("BoxCore loadasdasded successfully.");
 
         this.customTimerCommand = new CustomTimerCommand(this);
         if (getCommand("customtimer") != null) {
