@@ -56,10 +56,6 @@ public final class Box extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
 
-        saveDefaultConfig();
-        reloadConfig();
-        loadConfigSettings();
-
         getLogger().info("BoxCoully.");
 
         this.customTimerCommand = new CustomTimerCommand(this);
