@@ -59,7 +59,7 @@ public final class Box extends JavaPlugin implements Listener {
     private int autoRespawnDelayTicks; // Para el nuevo modo de AutoRespawn con delay
 
     @Override
-    public void onEnabletestingtst() {
+    public void OneNableasd() {
         instance = this;
 
         saveDefaultConfig();
