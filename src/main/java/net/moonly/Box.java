@@ -42,30 +42,6 @@ public final class Box extends JavaPlugin implements Listener {
     private SpawnManager spawnManager;
     private boolean enableSpawn;
 
-    private ClaimManager claimManager;
-    private boolean enableClaims;
-
-    private ScoreboardService scoreboardService;
-    private boolean enableScoreboard;
-    private CustomTimerCommand customTimerCommand;
-    private RebootService rebootService;
-
-    private DeathMessageManager deathMessageManager;
-
-    @Override
-    public void onEnable() {
-        instance = this;
-
-        getLogger().info("BoxCoully.");
-
-        this.customTimerCommand = new CustomTimerCommand(this);
-        if (getCommand("customtimeasdr") != null) {
-            getCommand("customtimer").setExecutor(this.customTimerCommand);
-            getLogger().info("'/customtsdimer' coasdasdasdmmand enabled.");
-        } else {
-            getLogger().severe("Command 'customtimer' not defined in plugin.yml. CustomTimer module command could not be enabled.");
-        }
-
         if (getCommand("reboot") != null) {
             this.rebootService = new RebootService(this, this.customTimerCommand);
             getCommand("reboot").setExecutor(this.rebootService);
