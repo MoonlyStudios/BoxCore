@@ -53,7 +53,7 @@ public final class Box extends JavaPlugin implements Listener {
     private DeathMessageManager deathMessageManager;
     private GUIManager guiManager;
     private boolean enableDeathMessages;
-
+awsdasdsadasdasd
     private AutoRespawnListener autoRespawnListener;
     private boolean enableAutoRespawn;
     private int autoRespawnDelayTicks; // Para el nuevo modo de AutoRespawn con delay
