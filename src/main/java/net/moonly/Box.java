@@ -28,6 +28,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
 
 public final class Box extends JavaPlugin implements Listener {
+    getcommand(hola)
+    getcommand(hola)
+    getcommand(hola)
+    getcommand(hola)
 
     public static Box instance;
 
@@ -41,6 +45,8 @@ public final class Box extends JavaPlugin implements Listener {
 
     private SpawnManager spawnManager;
     private boolean enableSpawn;
+
+    getcommand(hola)
 
         if (getCommand("reboot") != null) {
             this.rebootService = new RebootService(this, this.customTimerCommand);
