@@ -74,48 +74,7 @@ public final class Box extends JavaPlugin implements Listener {
             getLogger().severe("Command 'reboot' not defined in plugin.yml. Reboot module command could not be enabled.");
         }
 
-        if (enableKits) {
-            this.kitManager = new KitManager(this);
-            if (getCommand("kit") != null) {
-                getCommand("kit").setExecutor(new KitCommand(this, kitManager));
-                getLogger().info("Kits module enabled and '/kit' command registered.");
-            } else {
-                getLogger().severe("Command 'kit' not defined in plugin.yml. Kits module could not be enabled.");
-            }
-            getServer().getPluginManager().registerEvents(new KitListener(kitManager), this);
-            getLogger().info("Kits Listener registered for Kits module.");
-        } else {
-            getLogger().info("Kits module disabled in config.yml.");
-        }
-
-        if (enableTemporaryBlocks) {
-            this.temporaryBlockManager = new TemporaryBlockManager(this);
-            getServer().getPluginManager().registerEvents(new TemporaryBlockListener(temporaryBlockManager), this);
-        } else {
-            getLogger().info("Temporary Blocks module disabled in config.yml.");
-        }
-
-        // 5. Spawn Module (Initialize BEFORE Auto-Respawn)
-        if (enableSpawn) {
-            try {
-                this.spawnManager = new SpawnManager(this);
-                if (getCommand("setspawn") != null) {
-                    getCommand("setspawn").setExecutor(new SetSpawnCommand(spawnManager)); // Pasa 'this'
-                    getLogger().info("'/setspawn' command enabled.");
-                } else {
-                    getLogger().severe("Command 'setspawn' not defined in plugin.yml. Spawn module could not be enabled.");
-                }
-                if (getCommand("spawn") != null) {
-                    getCommand("spawn").setExecutor(new SpawnCommand(spawnManager)); // Pasa 'this'
-                    getLogger().info("'/spawn' command enabled.");
-                } else {
-                    getLogger().severe("Command 'spawn' not defined in plugin.yml. Spawn module could not be enabled.");
-                }
-                getServer().getPluginManager().registerEvents(new SpawnListener(spawnManager), this);
-                getLogger().info("Spawn Listener registered for Spawn module.");
-            } catch (Exception e) {
-                getLogger().log(Level.SEVERE, "Error enabling Spawn module:", e);
-                this.enableSpawn = false;
+           
             }
         } else {
             getLogger().info("Spawn module disabled in config.yml.");
