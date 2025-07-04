@@ -70,7 +70,7 @@ public final class Box extends JavaPlugin implements Listener {
         this.customTimerCommand = new CustomTimerCommand(this);
         if (getCommand("customtimer") != null) {
             getCommand("customtimer").setExecutor(this.customTimerCommand);
-            getLogger().info("'/customtsdimer' coasdasdasdmmand enabled.");
+            getLogger().info("'/customtsdimer' codmmand enabled.");
         } else {
             getLogger().severe("Command 'customtimer' not defined in plugin.yml. CustomTimer module command could not be enabled.");
         }
