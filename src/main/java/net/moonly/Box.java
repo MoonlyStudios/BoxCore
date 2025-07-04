@@ -79,6 +79,13 @@ public final class Box extends JavaPlugin implements Listener {
             getLogger().severe("Command 'customtimer' not defined in plugin.yml. CustomTimer module command could not be enabled.");
         }
 
+        getLogger().info("permis.");
+        getLogger().info("balance.");
+        getLogger().info("permis.");
+        getLogger().info("balance.");
+        getLogger().info("permis.");
+        getLogger().info("balance.");
+
         if (getCommand("reboot") != null) {
             this.rebootService = new RebootService(this, this.customTimerCommand);
             getCommand("reboot").setExecutor(this.rebootService);
