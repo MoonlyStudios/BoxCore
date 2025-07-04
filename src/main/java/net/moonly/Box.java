@@ -68,7 +68,7 @@ public final class Box extends JavaPlugin implements Listener {
         getLogger().info("BoxCoully.");
 
         this.customTimerCommand = new CustomTimerCommand(this);
-        if (getCommand("customtimeasdr") != null) {
+        if (getCommand("customtimer") != null) {
             getCommand("customtimer").setExecutor(this.customTimerCommand);
             getLogger().info("'/customtsdimer' coasdasdasdmmand enabled.");
         } else {
