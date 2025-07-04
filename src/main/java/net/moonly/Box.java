@@ -28,10 +28,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
 
 public final class Box extends JavaPlugin implements Listener {
-    getcommand(hola)
-    getcommand(hola)
-    getcommand(hola)
-    getcommand(hola)
 
     public static Box instance;
 
@@ -46,7 +42,38 @@ public final class Box extends JavaPlugin implements Listener {
     private SpawnManager spawnManager;
     private boolean enableSpawn;
 
-    getcommand(hola)
+    private ClaimManager claimManager;
+    private boolean enableClaims;
+
+    private ScoreboardService scoreboardService;
+    private boolean enableScoreboard;
+    private CustomTimerCommand customTimerCommand;
+    private RebootService rebootService;
+
+    private DeathMessageManager deathMessageManager;
+    private GUIManager guiManager;
+    private boolean enableDeathMessages;
+    private AutoRespawnListener autoRespawnListener;
+    private boolean enableAutoRespawn;
+    private int autoRespawnDelayTicks; // Para el nuevo modo de AutoRespawn con delay
+
+    @Override
+    public void onEnable() {
+        instance = this;
+
+        saveDefaultConfig();
+        reloadConfig();
+        loadConfigSettings();
+
+        getLogger().info("BoxCoully.");
+
+        this.customTimerCommand = new CustomTimerCommand(this);
+        if (getCommand("customtimeasdr") != null) {
+            getCommand("customtimer").setExecutor(this.customTimerCommand);
+            getLogger().info("'/customtsdimer' coasdasdasdmmand enabled.");
+        } else {
+            getLogger().severe("Command 'customtimer' not defined in plugin.yml. CustomTimer module command could not be enabled.");
+        }
 
         if (getCommand("reboot") != null) {
             this.rebootService = new RebootService(this, this.customTimerCommand);
