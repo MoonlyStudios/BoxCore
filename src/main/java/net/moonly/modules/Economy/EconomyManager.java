@@ -12,8 +12,10 @@ import java.io.File;
 import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.util.ArrayList; // Importar
+import java.util.HashMap; // Importar
+import java.util.List; // Importar
+import java.util.Map; // Importar
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -22,7 +24,7 @@ public class EconomyManager {
 
     private final Box plugin;
     private EconomyDatabase database;
-    private FileConfiguration config; // Este ahora será el economy.yml
+    private FileConfiguration config; // Este es economy.yml
     private File configFile;
 
     private double initialBalance;
@@ -32,17 +34,23 @@ public class EconomyManager {
     private int baltopSize;
     private String prefix;
 
-    // --- Nuevas propiedades para la GUI de Baltop ---
-    private String baltopGuiTitle;
-    private String baltopGuiItemName;
-    private java.util.List<String> baltopGuiItemLore;
-    // ----------------------------------------------
+    // --- Nuevas propiedades para la GUI de Baltop desde topmenu.yml ---
+    private FileConfiguration topMenuConfig; // Nueva configuración para topmenu.yml
+    private File topMenuConfigFile;
 
+    private String baltopGuiTitle;
+    private int baltopGuiSize;
+    private String baltopPlayerHeadName;
+    private List<String> baltopPlayerHeadLore;
+    private Map<String, Map<String, Object>> guiItemDefinitions; // Para ítems de relleno y otros
+
+    // -----------------------------------------------------------------
 
     public EconomyManager(Box plugin) {
         this.plugin = plugin;
         this.database = new EconomyDatabase(plugin);
         loadConfig();
+        loadTopMenuConfig(); // Cargar la configuración del menú
     }
 
     public Box getPlugin() {
@@ -62,41 +70,73 @@ public class EconomyManager {
     }
 
     private void loadConfig() {
-        // La ruta ahora apunta al archivo dentro de la subcarpeta 'modules/economy'
         configFile = new File(plugin.getDataFolder(), "modules/economy/economy.yml");
         if (!configFile.exists()) {
-            // Guarda el recurso predeterminado desde el JAR a la carpeta de datos del plugin
             plugin.saveResource("modules/economy/economy.yml", false);
             plugin.getLogger().log(Level.INFO, "Created default economy.yml.");
         }
         config = YamlConfiguration.loadConfiguration(configFile);
         plugin.getLogger().log(Level.INFO, "Loaded economy.yml from path: " + configFile.getAbsolutePath());
 
-        // Aquí no necesitamos el prefijo "settings." porque economy.yml es la configuración raíz de este módulo
         this.initialBalance = config.getDouble("initial-balance", 1000.0);
         this.currencySymbol = config.getString("currency-symbol", "$");
         this.decimalFormatPattern = config.getString("decimal-format", "#,##0.00");
         this.formatLargeNumbers = config.getBoolean("format-large-numbers", true);
-        this.baltopSize = config.getInt("baltop-size", 10);
+        this.baltopSize = config.getInt("baltop-size", 16); // Asegurarse que es 16 por defecto aquí.
         this.prefix = ChatColor.translateAlternateColorCodes('&', config.getString("messages.prefix", "&b[&6Economia&b] &r"));
-
-        // --- Cargar nuevas propiedades de la GUI de Baltop ---
-        this.baltopGuiTitle = ChatColor.translateAlternateColorCodes('&', config.getString("gui.baltop.title", "&8Top Economia"));
-        this.baltopGuiItemName = ChatColor.translateAlternateColorCodes('&', config.getString("gui.baltop.item-name", "&a{position}. &e{player}"));
-        this.baltopGuiItemLore = config.getStringList("gui.baltop.item-lore");
-        // Traducir colores en la lore
-        if (this.baltopGuiItemLore != null) {
-            for (int i = 0; i < this.baltopGuiItemLore.size(); i++) {
-                this.baltopGuiItemLore.set(i, ChatColor.translateAlternateColorCodes('&', this.baltopGuiItemLore.get(i)));
-            }
-        }
-        // ----------------------------------------------------
 
         plugin.getLogger().info("Loaded economy.yml configuration settings.");
     }
 
-    public void reloadConfig() {
+    private void loadTopMenuConfig() { // NUEVO MÉTODO
+        topMenuConfigFile = new File(plugin.getDataFolder(), "modules/economy/topmenu.yml");
+        if (!topMenuConfigFile.exists()) {
+            plugin.saveResource("modules/economy/topmenu.yml", false);
+            plugin.getLogger().log(Level.INFO, "Created default topmenu.yml.");
+        }
+        topMenuConfig = YamlConfiguration.loadConfiguration(topMenuConfigFile);
+        plugin.getLogger().log(Level.INFO, "Loaded topmenu.yml from path: " + topMenuConfigFile.getAbsolutePath());
+
+        // Cargar propiedades de la GUI desde topmenu.yml
+        this.baltopGuiTitle = ChatColor.translateAlternateColorCodes('&', topMenuConfig.getString("menu-settings.title", "&8Top Economia"));
+        this.baltopGuiSize = topMenuConfig.getInt("menu-settings.size", 27);
+
+        this.baltopPlayerHeadName = ChatColor.translateAlternateColorCodes('&', topMenuConfig.getString("items.player-head.name", "&a{position}. &e{player}"));
+        this.baltopPlayerHeadLore = new ArrayList<>();
+        List<String> rawLore = topMenuConfig.getStringList("items.player-head.lore");
+        if (rawLore != null) {
+            for (String line : rawLore) {
+                this.baltopPlayerHeadLore.add(ChatColor.translateAlternateColorCodes('&', line));
+            }
+        }
+
+        // Cargar definición de ítems de relleno
+        this.guiItemDefinitions = new HashMap<>();
+        if (topMenuConfig.isConfigurationSection("items")) {
+            for (String key : topMenuConfig.getConfigurationSection("items").getKeys(false)) {
+                if (key.equals("player-head")) continue; // Saltar el item de cabeza de jugador
+
+                Map<String, Object> itemData = new HashMap<>();
+                itemData.put("material", topMenuConfig.getString("items." + key + ".material", "STONE"));
+                itemData.put("name", ChatColor.translateAlternateColorCodes('&', topMenuConfig.getString("items." + key + ".name", " ")));
+                List<String> itemRawLore = topMenuConfig.getStringList("items." + key + ".lore");
+                List<String> itemLore = new ArrayList<>();
+                if (itemRawLore != null) {
+                    for (String line : itemRawLore) {
+                        itemLore.add(ChatColor.translateAlternateColorCodes('&', line));
+                    }
+                }
+                itemData.put("lore", itemLore);
+                this.guiItemDefinitions.put(key, itemData);
+            }
+        }
+        plugin.getLogger().info("Loaded topmenu.yml configuration settings.");
+    }
+
+
+    public void reloadConfig() { // Método reloadConfig ahora recarga ambos archivos
         loadConfig();
+        loadTopMenuConfig();
         plugin.getLogger().info("Economy module config reloaded.");
     }
 
@@ -301,12 +341,24 @@ public class EconomyManager {
         return baltopGuiTitle;
     }
 
-    public String getBaltopGuiItemName() {
-        return baltopGuiItemName;
+    public int getBaltopGuiSize() {
+        return baltopGuiSize;
     }
 
-    public java.util.List<String> getBaltopGuiItemLore() {
-        return baltopGuiItemLore;
+    public String getBaltopPlayerHeadName() {
+        return baltopPlayerHeadName;
+    }
+
+    public List<String> getBaltopPlayerHeadLore() {
+        return baltopPlayerHeadLore;
+    }
+
+    public Map<String, Map<String, Object>> getGuiItemDefinitions() {
+        return guiItemDefinitions;
+    }
+
+    public List<String> getBaltopGuiLayout() { // Nuevo getter para el layout
+        return topMenuConfig.getStringList("layout");
     }
     // ----------------------------------------------
 }
