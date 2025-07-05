@@ -1,13 +1,19 @@
-  modules:
-    kits:
-      enabled: true
-    temporaryblocks:
-      enabled: true
-    spawn:
-      enabled: true
-    claims:
-      enabled: true
-    scoreboard:
-      enabled: true
-    reboot:
-      enabled: true
+# ... (otras configuraciones de módulos)
+
+modules:
+  kits:
+    enabled: true
+  temporaryblocks:
+    enabled: true
+  spawn:
+    enabled: true
+  claims:
+    enabled: true
+  scoreboard:
+    enabled: true
+  deathmessages:
+    enabled: true
+  autorespawn:
+    enabled: true
+  economy:
+    enabled: true

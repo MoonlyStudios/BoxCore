@@ -30,7 +30,30 @@ commands:
   deathmessage:
     permission: sakuracore.deathmessage.use
     permission-message: You do not have permission to use this command.
+  eco:
+    description: Manages the server economy or shows your balance.
+    usage: |
+      /<command>
+      /<command> [give|set|take] <player> <amount>
+      /<command> [giveall|takeall] <amount>
+      /<command> reset <player>
+      /<command> [bal|balance] <player>
+      /<command> reload
+    aliases: [economy, money]
+  pay:
+    description: Pays money to another player.
+    usage: /<command> <player> <amount>
+
+  baltop:
+    usage: /<command>
+
 permissions:
+  core.economy.admin:
+    description: Allows using all economy admin commands.
+    default: op
+  core.economy.use:
+    description: Allows players to check their balance and use /pay.
+    default: true
   boxcore.kit:
     default: true
   boxcore.kit.admin:

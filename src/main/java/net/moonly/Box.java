@@ -1,11 +1,14 @@
 package net.moonly;
 
+import net.moonly.commands.player.BaltopCommand;
+import net.moonly.commands.player.PayCommand;
 import net.moonly.commands.player.SpawnCommand;
 import net.moonly.commands.staff.*;
 import net.moonly.handlers.AutoRespawnListener;
 import net.moonly.modules.Claims.ClaimListener;
 import net.moonly.modules.Claims.ClaimManager;
 import net.moonly.modules.Claims.ClaimSelectionListener;
+import net.moonly.modules.Economy.placeholder.EconomyPlaceholder;
 import net.moonly.modules.Kit.KitListener;
 import net.moonly.modules.Kit.KitManager;
 import net.moonly.modules.Spawn.SpawnListener;
@@ -18,9 +21,14 @@ import net.moonly.modules.deathmessage.GUIManager;
 import net.moonly.modules.deathmessage.DeathListener;
 import net.moonly.commands.player.DeathMessageCommand;
 
+// Nuevas importaciones para el módulo de economía
+import net.moonly.modules.Economy.EconomyManager;
+import net.moonly.modules.Economy.EconomyListener;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -56,7 +64,12 @@ public final class Box extends JavaPlugin implements Listener {
 
     private AutoRespawnListener autoRespawnListener;
     private boolean enableAutoRespawn;
-    private int autoRespawnDelayTicks; // Para el nuevo modo de AutoRespawn con delay
+    // private int autoRespawnDelayTicks; // Removido si el listener lo gestiona internamente
+
+    // >>>>> INICIO: Nuevas propiedades para el módulo de Economía <<<<<
+    private EconomyManager economyManager;
+    private boolean enableEconomy;
+    // >>>>> FIN: Nuevas propiedades para el módulo de Economía <<<<<
 
     @Override
     public void onEnable() {
@@ -101,6 +114,7 @@ public final class Box extends JavaPlugin implements Listener {
         if (enableTemporaryBlocks) {
             this.temporaryBlockManager = new TemporaryBlockManager(this);
             getServer().getPluginManager().registerEvents(new TemporaryBlockListener(temporaryBlockManager), this);
+            getLogger().info("Temporary Blocks module enabled.");
         } else {
             getLogger().info("Temporary Blocks module disabled in config.yml.");
         }
@@ -110,13 +124,13 @@ public final class Box extends JavaPlugin implements Listener {
             try {
                 this.spawnManager = new SpawnManager(this);
                 if (getCommand("setspawn") != null) {
-                    getCommand("setspawn").setExecutor(new SetSpawnCommand(spawnManager)); // Pasa 'this'
+                    getCommand("setspawn").setExecutor(new SetSpawnCommand(spawnManager));
                     getLogger().info("'/setspawn' command enabled.");
                 } else {
                     getLogger().severe("Command 'setspawn' not defined in plugin.yml. Spawn module could not be enabled.");
                 }
                 if (getCommand("spawn") != null) {
-                    getCommand("spawn").setExecutor(new SpawnCommand(spawnManager)); // Pasa 'this'
+                    getCommand("spawn").setExecutor(new SpawnCommand(spawnManager));
                     getLogger().info("'/spawn' command enabled.");
                 } else {
                     getLogger().severe("Command 'spawn' not defined in plugin.yml. Spawn module could not be enabled.");
@@ -169,7 +183,7 @@ public final class Box extends JavaPlugin implements Listener {
         if (enableDeathMessages) {
             try {
                 this.deathMessageManager = new DeathMessageManager(this);
-                this.guiManager = new GUIManager(this); // GUIManager también recibe 'this'
+                this.guiManager = new GUIManager(this);
 
                 getServer().getPluginManager().registerEvents(new DeathListener(deathMessageManager), this);
                 getLogger().info("DeathListener registered for Death Messages module.");
@@ -193,9 +207,6 @@ public final class Box extends JavaPlugin implements Listener {
         if (enableAutoRespawn) {
             if (spawnManager != null) {
                 try {
-                    // Pasa el delay en ticks. Si quieres el auto-respawn SIN PANTALLA, usa 1L o 2L internamente
-                    // en el listener. Si quieres CON PANTALLA Y DELAY, lee de config.
-                    // Aquí, asumo que quieres la versión de auto-respawn SIN PANTALLA que es lo más común.
                     this.autoRespawnListener = new AutoRespawnListener(this, spawnManager, enableAutoRespawn);
                     getServer().getPluginManager().registerEvents(autoRespawnListener, this);
                     getLogger().info("Auto-Respawn module enabled.");
@@ -210,6 +221,53 @@ public final class Box extends JavaPlugin implements Listener {
         } else {
             getLogger().info("Auto-Respawn module disabled in config.yml.");
         }
+
+        // >>>>> INICIO: Inicialización del módulo de Economía <<<<<
+        if (enableEconomy) {
+            try {
+                this.economyManager = new EconomyManager(this);
+                // Registrar comandos
+                if (getCommand("eco") != null) {
+                    getCommand("eco").setExecutor(new EconomyAdminCommand(economyManager));
+                    getLogger().info("'/eco' command enabled.");
+                } else {
+                    getLogger().severe("Command 'eco' not defined in plugin.yml. Economy module command could not be enabled.");
+                }
+                if (getCommand("pay") != null) {
+                    getCommand("pay").setExecutor(new PayCommand(economyManager));
+                    getLogger().info("'/pay' command enabled.");
+                } else {
+                    getLogger().severe("Command 'pay' not defined in plugin.yml. Pay command could not be enabled.");
+                }
+                // REGISTRAR EL NUEVO COMANDO /baltop
+                if (getCommand("baltop") != null) { // <--- NUEVA LÍNEA
+                    getCommand("baltop").setExecutor(new BaltopCommand(economyManager)); // <--- NUEVA LÍNEA
+                    getLogger().info("'/baltop' command enabled."); // <--- NUEVA LÍNEA
+                } else { // <--- NUEVA LÍNEA
+                    getLogger().severe("Command 'baltop' not defined in plugin.yml. Baltop command could not be enabled."); // <--- NUEVA LÍNEA
+                } // <--- NUEVA LÍNEA
+
+                // Registrar Listener para inicializar el dinero de nuevos jugadores
+                getServer().getPluginManager().registerEvents(new EconomyListener(economyManager), this);
+                getLogger().info("Economy Listener registered for Economy module.");
+
+                // Registrar PlaceholderAPI hook si PlaceholderAPI está presente
+                if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                    new EconomyPlaceholder(this, economyManager).register();
+                    getLogger().info("PlaceholderAPI hook for Economy registered.");
+                } else {
+                    getLogger().warning("PlaceholderAPI not found. Economy placeholders will not be available.");
+                }
+
+                getLogger().info("Economy module enabled.");
+            } catch (Exception e) {
+                getLogger().log(Level.SEVERE, "Error enabling Economy module:", e);
+                this.enableEconomy = false;
+            }
+        } else {
+            getLogger().info("Economy module disabled in config.yml.");
+        }
+        // >>>>> FIN: Inicialización del módulo de Economía <<<<<
     }
 
     @Override
@@ -252,6 +310,13 @@ public final class Box extends JavaPlugin implements Listener {
         if (enableAutoRespawn && autoRespawnListener != null) {
             getLogger().info("Cleaning up Auto-Respawn module.");
         }
+
+        // >>>>> INICIO: Limpieza del módulo de Economía <<<<<
+        if (enableEconomy && economyManager != null) {
+            economyManager.shutdown();
+            getLogger().info("Cleaning up Economy module.");
+        }
+        // >>>>> FIN: Limpieza del módulo de Economía <<<<<
     }
 
     public static Box getInstance() {
@@ -290,6 +355,12 @@ public final class Box extends JavaPlugin implements Listener {
         return deathMessageManager;
     }
 
+    // >>>>> INICIO: Getter para EconomyManager <<<<<
+    public EconomyManager getEconomyManager() {
+        return economyManager;
+    }
+    // >>>>> FIN: Getter para EconomyManager <<<<<
+
     private void loadConfigSettings() {
         this.enableKits = getConfig().getBoolean("modules.kits.enabled", true);
         this.enableTemporaryBlocks = getConfig().getBoolean("modules.temporaryblocks.enabled", true);
@@ -298,7 +369,10 @@ public final class Box extends JavaPlugin implements Listener {
         this.enableScoreboard = getConfig().getBoolean("modules.scoreboard.enabled", true);
         this.enableDeathMessages = getConfig().getBoolean("modules.deathmessages.enabled", true);
         this.enableAutoRespawn = getConfig().getBoolean("modules.autorespawn.enabled", true);
-        // Aquí NO cargo autoRespawnDelayTicks, el listener lo gestiona internamente para evitar la pantalla
+
+        // >>>>> INICIO: Cargar configuración de Economía <<<<<
+        this.enableEconomy = getConfig().getBoolean("modules.economy.enabled", true);
+        // >>>>> FIN: Cargar configuración de Economía <<<<<
     }
 
     public void reloadModules() {
@@ -318,6 +392,12 @@ public final class Box extends JavaPlugin implements Listener {
         if (autoRespawnListener != null) {
             autoRespawnListener.setEnableAutoRespawn(this.enableAutoRespawn);
         }
+
+        // >>>>> INICIO: Recarga del módulo de Economía <<<<<
+        if (economyManager != null) {
+            economyManager.reloadConfig();
+        }
+        // >>>>> FIN: Recarga del módulo de Economía <<<<<
 
         getLogger().info("BoxCore modules reloaded.");
     }

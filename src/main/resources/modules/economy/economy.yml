@@ -1,0 +1,41 @@
+# Configuración específica para el módulo de Economía
+initial-balance: 1000.0
+currency-symbol: "$"
+decimal-format: "#,##0.00"
+format-large-numbers: true
+baltop-size: 16
+
+messages:
+  prefix: "&b[&6Economia&b] &r"
+  balance-self: "&aTu balance es: &e{balance}{symbol}"
+  balance-other: "&aEl balance de &e{player}&a es: &e{balance}{symbol}"
+  player-not-found: "&cJugador no encontrado."
+  invalid-amount: "&cCantidad inválida. Debe ser un número positivo."
+  not-enough-money: "&cNo tienes suficiente dinero para hacer esto."
+  pay-success-sender: "&aHas pagado &e{amount}{symbol} &aa &e{target}&a."
+  pay-success-receiver: "&aHas recibido &e{amount}{symbol} &ade de &e{sender}&a."
+  eco-give-success: "&aHas añadido &e{amount}{symbol} &aa &e{target}&a. Nuevo balance: &e{new_balance}{symbol}"
+  eco-take-success: "&aHas quitado &e{amount}{symbol} &aa &e{target}&a. Nuevo balance: &e{new_balance}{symbol}"
+  eco-set-success: "&aHas establecido el balance de &e{target}&a a &e{new_balance}{symbol}."
+  eco-giveall-success: "&aHas añadido &e{amount}{symbol} &aa todos los jugadores conectados."
+  eco-takeall-success: "&aHas quitado &e{amount}{symbol} &aa todos los jugadores conectados."
+  eco-reset-success: "&aHas reseteado el balance de &e{target}&a a &e0{symbol}."
+  no-permission: "&cNo tienes permiso para usar este comando."
+  # Uso actualizado para EconomyAdminCommand, ya no incluye 'baltop'
+  usage-eco-admin: "&cUso: /eco [give|set|take|giveall|takeall|reset|bal|balance|reload] <player> <amount>"
+  usage-pay: "&cUso: /pay <player> <amount>"
+  baltop-header: "&b--- Top de Dinero ---"
+  baltop-entry: "&e{position}. &a{player} &f- &e{balance}{symbol}"
+  baltop-footer: "&b--------------------"
+  initial-balance-given: "&a¡Bienvenido! Has recibido &e{amount}{symbol} &acomo balance inicial."
+  eco-give-received: "&aHas recibido &e{amount}{symbol} &ade &e{sender}&a."
+  eco-take-removed: "&cTe han quitado &e{amount}{symbol} &ade &e{sender}&a."
+  eco-set-to-you: "&aTu balance ha sido establecido a &e{new_balance}{symbol} &apor &e{sender}&a."
+
+gui:
+  baltop:
+    title: "&8Top Economia"
+    item-name: "&a{position}. &e{player}"
+    item-lore:
+      - "&fBalance: &e{balance}{symbol}"
+      - "&7Click para ver más detalles."
