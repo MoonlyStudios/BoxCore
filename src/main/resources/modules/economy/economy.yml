@@ -3,7 +3,7 @@ initial-balance: 1000.0
 currency-symbol: "$"
 decimal-format: "#,##0.00"
 format-large-numbers: true
-baltop-size: 16
+baltop-size: 16 # <--- Asegúrate de que este sea 16 para que se busquen 16 jugadores
 
 messages:
   prefix: "&b[&6Economia&b] &r"
@@ -21,7 +21,6 @@ messages:
   eco-takeall-success: "&aHas quitado &e{amount}{symbol} &aa todos los jugadores conectados."
   eco-reset-success: "&aHas reseteado el balance de &e{target}&a a &e0{symbol}."
   no-permission: "&cNo tienes permiso para usar este comando."
-  # Uso actualizado para EconomyAdminCommand, ya no incluye 'baltop'
   usage-eco-admin: "&cUso: /eco [give|set|take|giveall|takeall|reset|bal|balance|reload] <player> <amount>"
   usage-pay: "&cUso: /pay <player> <amount>"
   baltop-header: "&b--- Top de Dinero ---"
@@ -32,10 +31,4 @@ messages:
   eco-take-removed: "&cTe han quitado &e{amount}{symbol} &ade &e{sender}&a."
   eco-set-to-you: "&aTu balance ha sido establecido a &e{new_balance}{symbol} &apor &e{sender}&a."
 
-gui:
-  baltop:
-    title: "&8Top Economia"
-    item-name: "&a{position}. &e{player}"
-    item-lore:
-      - "&fBalance: &e{balance}{symbol}"
-      - "&7Click para ver más detalles."
+# La sección 'gui' se ha movido a topmenu.yml

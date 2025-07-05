@@ -1,0 +1,57 @@
+# Configuración del menú de Baltop
+
+menu-settings:
+  title: "&8Top Economia" # Título de la GUI
+  size: 54 # <--- Tamaño de la GUI: 6 filas * 9 slots = 54 slots (cofre completo)
+
+# Definición de los ítems del menú.
+# Puedes usar:
+# - 'player-head' para la cabeza del jugador del top.
+# - Un MATERIAL_ENUM para cualquier otro item (ej: GRAY_STAINED_GLASS_PANE).
+# - Puedes definir varios items de relleno y asignarlos a diferentes slots.
+
+items:
+  player-head: # Configuración para los ítems de las cabezas de los jugadores del top
+    name: "&a{position}. &e{player}" # Nombre del ítem (cabeza)
+    lore: # Lore del ítem (cabeza)
+      - "&fBalance: &e{balance}{symbol}"
+      - "&7Click para ver más detalles."
+
+  filler-pane: # Un ítem de relleno de ejemplo
+    material: BLACK_STAINED_GLASS_PANE # Material por defecto para el relleno
+    name: " "
+    lore: []
+
+  border-item: # Un ítem para bordes o separadores
+    material: GRAY_STAINED_GLASS_PANE
+    name: " "
+    lore: []
+
+# Layout del menú (cómo se distribuyen los ítems)
+# Cada número representa la posición en el top (ej: 1 para el 1er puesto, 2 para el 2do, etc.).
+# Los 'F' representan un ítem de relleno. Si tienes varios fillers, puedes usar 'F1', 'F2', etc.,
+# y asegurarte de que estén definidos en la sección 'items' con esos mismos nombres.
+# Aquí, usaré 'filler-pane' y 'border-item' para más variedad.
+# Se mostrarán hasta baltop-size jugadores. Si hay menos de los que se buscan, el resto serán fillers.
+
+# Ejemplo de layout para 54 slots (6 filas), mostrando hasta 30 jugadores o más si se ajustan los fillers.
+# He diseñado un layout que intenta maximizar las cabezas de jugador en las filas centrales.
+# Los números representan las posiciones del top. 'F' es 'filler-pane', 'B' es 'border-item'.
+
+layout:
+  # Fila 1 (Slots 0-8)
+  - B, B, B, B, B, B, B, B, B
+  # Fila 2 (Slots 9-17) - Pirámide central (Top 1)
+  - F, F, F, 1, F, F, F, F, F
+  # Fila 3 (Slots 18-26) - Jugadores del top 2 al 6
+  - F, F, 2, 3, 4, 5, 6, F, F
+  # Fila 4 (Slots 27-35) - Jugadores del top 7 al 16 (10 jugadores)
+  - 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 # Ajustado para mostrar 10 aquí, asegurando que 16 jugadores puedan aparecer
+
+  # Fila 5 (Slots 36-44) - Jugadores del top 17 al 25 (9 jugadores)
+  - 17, 18, 19, 20, 21, 22, 23, 24, 25
+
+  # Fila 6 (Slots 45-53) - Jugadores del top 26 al 34 (9 jugadores) y/o fillers
+  - 26, 27, 28, 29, 30, F, F, F, F # Puedes ajustar estos números y F según el total de jugadores que quieras mostrar.
+    # Por ejemplo, si tienes 30 jugadores en el top, usa hasta el 30 aquí.
+  # El resto serán fillers.
